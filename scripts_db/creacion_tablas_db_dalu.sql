@@ -1,7 +1,7 @@
+
 ALTER SEQUENCE sec_productos OWNED BY  productos.id_producto;
 ALTER SEQUENCE sec_categorias OWNED BY categorias.id_categoria;
 ALTER SEQUENCE sec_marca OWNED BY marca.id_marca;
-
 
 
 CREATE SEQUENCE sec_productos 
@@ -43,6 +43,17 @@ CREATE TABLE productos (
 	id_categoria INT NOT NULL REFERENCES categorias(id_categoria) ON DELETE RESTRICT,
 	id_marca INT NOT NULL REFERENCES marca(id_marca) ON DELETE RESTRICT
 );
+
+CREATE TABLE imagenes_producto(
+	id_producto INT NOT NULL REFERENCES productos(id_producto) ON DELETE CASCADE,
+	num_imagen SMALLINT NOT NULL CHECK (num_imagen BETWEEN 1 AND 5),
+	file_id VARCHAR(100) NOT NULL,
+	creado_en DATE NOT NULL DEFAULT CURRENT_DATE,
+	PRIMARY KEY (id_producto,num_imagen)
+);
+
+
+
 
 CREATE INDEX idx_productos_categoria ON productos(id_categoria);
 CREATE INDEX idx_productos_marca ON productos(id_marca);
